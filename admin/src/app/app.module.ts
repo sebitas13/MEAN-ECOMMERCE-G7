@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 
 
@@ -16,6 +15,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoginComponent } from './components/login/login.component';
 import { IndexClienteComponent } from './components/clientes/index-cliente/index-cliente.component';
+import { CreateClienteComponent } from './components/clientes/create-cliente/create-cliente.component';
 
 
 
@@ -27,6 +27,7 @@ import { IndexClienteComponent } from './components/clientes/index-cliente/index
     SidebarComponent,
     LoginComponent,
     IndexClienteComponent,
+    CreateClienteComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +37,6 @@ import { IndexClienteComponent } from './components/clientes/index-cliente/index
     HttpClientModule,
     routing,
     NgbPaginationModule,
-    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
