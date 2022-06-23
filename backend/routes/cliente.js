@@ -13,6 +13,7 @@ api.get('/listar_clientes_filtro_admin/:tipo/:filtro',auth.auth,clienteControlle
 api.post('/registro_cliente_admin',auth.auth,clienteController.registro_cliente_admin);
 api.get('/obtener_cliente_admin/:id',auth.auth,clienteController.obtener_cliente_admin);
 api.put('/actualizar_cliente_admin/:id',auth.auth,clienteController.actualizar_cliente_admin);
+api.delete('/eliminar_cliente_admin/:id',auth.auth,clienteController.eliminar_cliente_admin);
 
 
 module.exports= api;

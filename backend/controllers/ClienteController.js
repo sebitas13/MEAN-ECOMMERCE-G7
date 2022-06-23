@@ -169,7 +169,26 @@ const actualizar_cliente_admin = async function(req,res){
         res.status(500).send({message:'NoAcceso'});
     }
 
+
 }
+
+const eliminar_cliente_admin = async function(req,res){
+    if(req.user){
+        if(req.user.role  == 'admin'){
+
+            var id = req.params['id'];
+            let reg = await Cliente.findByIdAndRemove({_id:id});
+            res.status(200).send({data:reg})
+           
+         }else{
+            res.status(500).send({message:'NoAcceso'});
+        }
+    }else{
+        res.status(500).send({message:'NoAcceso'});
+    }
+}
+
+
 
 module.exports = {
     login_cliente,
@@ -177,6 +196,7 @@ module.exports = {
     listar_clientes_filtro_admin,
     registro_cliente_admin,
     obtener_cliente_admin,
-    actualizar_cliente_admin
+    actualizar_cliente_admin,
+    eliminar_cliente_admin
 }
 
