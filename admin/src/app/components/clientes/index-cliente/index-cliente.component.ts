@@ -1,8 +1,11 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { response } from 'express';
 import { AdminService } from 'src/app/services/admin.service';
 import { ClienteService } from 'src/app/services/cliente.service';
+declare var JQuery:any;
+declare var $:any;
+declare var iziToast:any;
+
 
 @Component({
   selector: 'app-index-cliente',
@@ -28,12 +31,18 @@ export class IndexClienteComponent implements OnInit {
     
   }
 
+  ngOnInit(): void {
+    
+    this.init_Data();
+   }
+ 
+
   init_Data(){
     this._clienteService.listar_clientes_filtro_admin(null,null,this.token).subscribe(
       response=>{
         
         this.clientes = response.data;
-        console.log(this.clientes);
+        
       },
       error=>{
         console.log(error);
@@ -42,11 +51,7 @@ export class IndexClienteComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    
-   this.init_Data();
-  }
-
+ 
   
 
   filtro(tipo:any){
@@ -90,8 +95,32 @@ export class IndexClienteComponent implements OnInit {
       }
     }
 
-   
     
   }
 
+
+  eliminar(id:any){
+    this._clienteService.eliminar_cliente_admin(id,this.token).subscribe(
+      response=>{
+          iziToast.show({
+          title:'SUCCESS',
+          titleColor:'#1DC74C',
+          class:'text-success',
+          position:'topRight',
+          message : 'Registro cliente eliminado'
+        });
+
+        $('#delete-'+id).modal('hide');
+        $('.modal-backdrop').removeClass('show');
+
+        this.init_Data();
+                
+      },
+        error=>{
+        console.log(error);
+      }
+    )
+  }
+
 }
+
