@@ -41,6 +41,19 @@
                       <th>OPCIONES</th>
                     </tr>
                   </thead>
+                  <tbody *ngIf="load_data">
+                    <tr>
+                      <td class="text-center" colspan="5">
+                        <div class="spinner-border text-success" role="status">
+                          <span class="visually-hidden">G7</span>
+                        </div>
+                        
+                      </td>
+                    </tr>
+                  </tbody>
+
+                  <ng-container *ngIf="!load_data">
+                        
                   <tbody *ngFor="let item of clientes   | slice: (page-1)*pageSize:(page-1)*pageSize + pageSize   ;let indice = index">
                     <tr>
                       <td>{{indice+1}}</td>
@@ -51,7 +64,7 @@
                         <!-- Dropdown -->
                           <div class="btn-group dropdown">
                             <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              elige
+                              OPCIONES
                             </button>
                             <div class="dropdown-menu">
                               <a [routerLink]="['/panel/clientes',item._id]" class="dropdown-item">Editar cliente</a>
@@ -81,6 +94,8 @@
                       </td>
                     </tr>
                   </tbody>
+                  </ng-container>
+
                 </table>
             </div>
         </div>

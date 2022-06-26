@@ -1,5 +1,4 @@
-'use strict' //el navegador ejecuta nuestra codigo de forma estricta
-            //previene y muestra errores
+'use strict' 
 
 var express = require('express');
 var mongoose = require('mongoose');
