@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgxTinymceModule } from 'ngx-tinymce';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +20,7 @@ import { IndexClienteComponent } from './components/clientes/index-cliente/index
 import { CreateClienteComponent } from './components/clientes/create-cliente/create-cliente.component';
 import { EditClienteComponent } from './components/clientes/edit-cliente/edit-cliente.component';
 import { CreateProductoComponent } from './components/productos/create-producto/create-producto.component';
+import { IndexProductoComponent } from './components/productos/index-producto/index-producto.component';
 
 
 
@@ -32,6 +35,7 @@ import { CreateProductoComponent } from './components/productos/create-producto/
     CreateClienteComponent,
     EditClienteComponent,
     CreateProductoComponent,
+    IndexProductoComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,11 @@ import { CreateProductoComponent } from './components/productos/create-producto/
     HttpClientModule,
     routing,
     NgbPaginationModule,
+    NgxTinymceModule.forRoot({
+      baseURL: '../../../assets/tinymce/',
+      // or cdn
+      
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
