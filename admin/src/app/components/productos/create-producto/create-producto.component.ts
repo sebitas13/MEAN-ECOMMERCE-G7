@@ -50,27 +50,39 @@ export class CreateProductoComponent implements OnInit {
 
   registro(registroForm:any){
       if(registroForm.valid){
-      console.log(this.producto);
-      console.log(this.file);
-      this.load_btn = true;
-      this._productoService.registro_producto_admin(this.producto,this.file,this.token).subscribe(
-            response=>{
-              iziToast.show({
-                title:'SUCCESS',
-                titleColor:'#1DC74C',
-                class:'text-success',
-                position:'topRight',
-                message : 'Registro Exitoso del nuevo producto'
-            });
-            this.load_btn = false;
-            this._router.navigate(['/panel/productos']);
-        },error=>{
-            this.load_btn = false;
-            console.log(error);
+          if(this.file == undefined){
+
+                  iziToast.show({
+                  title:'ERROR',
+                  titleColor:'red',
+                  class:'text-danger',
+                  position:'topRight',
+                  message : 'falta subir la portada padre'
+              });
+
+          }else{
+            console.log(this.producto);
+            console.log(this.file);
+            this.load_btn = true;
+            this._productoService.registro_producto_admin(this.producto,this.file,this.token).subscribe(
+                  response=>{
+                    iziToast.show({
+                      title:'SUCCESS',
+                      titleColor:'#1DC74C',
+                      class:'text-success',
+                      position:'topRight',
+                      message : 'Registro Exitoso del nuevo producto'
+                  });
+                  this.load_btn = false;
+                  this._router.navigate(['/panel/productos']);
+              },error=>{
+                  this.load_btn = false;
+                  console.log(error);
+                  
+              }
+            );
             
-        }
-      );
-      
+          }
 
       }else{
             iziToast.show({
@@ -81,7 +93,7 @@ export class CreateProductoComponent implements OnInit {
               message : 'Datos no validos del formulario'
           });
 
-      this.load_btn = true;
+        this.load_btn = false;
       }
   }
 
