@@ -1,8 +1,11 @@
 'use strict'
 
-var producto = require('../models/producto');
+var Producto = require('../models/producto');
+var Inventario = require('../models/inventario');
 var fs = require('fs');
 var path = require('path');
+//var inventario = require('../models/inventario');
+
 
 
 const registro_producto_admin = async function(req, res){
@@ -16,9 +19,18 @@ const registro_producto_admin = async function(req, res){
 
             data.slug = data.titulo.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
             data.portada = portada_name;
-            let reg = await producto.create(data);
+            let reg = await Producto.create(data);
 
-            res.status(200).send({data:reg});
+
+            let inventario = await Inventario.create({
+                admin : req.user.sub,
+                cantidad : data.stock,
+                proveedor : 'Primer registro',
+                producto : reg._id
+            });
+
+
+            res.status(200).send({data:reg,inventario:inventario});
         }else{
             res.status(200).send({mensaje:'Error server hash',data:undefined});
         }
@@ -31,7 +43,7 @@ const listar_productos_admin = async function(req,res){
     if(req.user){
         if(req.user.role == 'admin'){
            var filtro = req.params['filtro'];
-           let reg = await producto.find({titulo : new RegExp(filtro,'i')});
+           let reg = await Producto.find({titulo : new RegExp(filtro,'i')});
            res.status(200).send({data:reg});
         }else{
             res.status(200).send({mensaje:'Error server hash',data:undefined});
@@ -63,7 +75,7 @@ const obtener_producto_admin = async function(req,res){
             
            try {
 
-                var reg = await producto.findById({_id:id});
+                var reg = await Producto.findById({_id:id});
 
                 res.status(200).send({data:reg});
             
@@ -96,7 +108,7 @@ const actualizar_producto_admin = async function(req, res){
                 var portada_name = name[2];
                 
                 //hay imagen
-                let reg = await producto.findByIdAndUpdate({_id:id},{
+                let reg = await Producto.findByIdAndUpdate({_id:id},{
                     titulo: data.titulo,
                     stock:  data.stock,
                     precio : data.precio,
@@ -120,7 +132,7 @@ const actualizar_producto_admin = async function(req, res){
                    res.status(200).send({data:reg});
             }else{
                 //no imagen
-               let reg = await producto.findByIdAndUpdate({_id:id},{
+               let reg = await Producto.findByIdAndUpdate({_id:id},{
                 titulo: data.titulo,
                 stock:  data.stock,
                 precio : data.precio,
@@ -152,7 +164,7 @@ const eliminar_producto_admin = async function(req,res){
         if(req.user.role  == 'admin'){
 
             var id = req.params['id'];
-            let reg = await producto.findByIdAndRemove({_id:id});
+            let reg = await Producto.findByIdAndRemove({_id:id});
             res.status(200).send({data:reg})
            
          }else{
@@ -163,7 +175,50 @@ const eliminar_producto_admin = async function(req,res){
     }
 }
 
+const listar_inventario_producto_admin = async function(req,res){
+    if(req.user){
+        if(req.user.role  == 'admin'){
 
+            var id = req.params['id'];
+            var reg =  await Inventario.find({producto:id}).populate('admin');
+            res.status(200).send({data:reg});
+           
+         }else{
+            res.status(500).send({message:'NoAcceso'});
+        }
+    }else{
+        res.status(500).send({message:'NoAcceso'});
+    }
+} 
+
+const eliminar_inventario_producto_admin = async function(req,res){
+    if(req.user){
+        if(req.user.role  == 'admin'){
+            //Obtencion de id del inventaro
+            var id = req.params['id'];
+
+            //Eliminar inventario
+           let reg = await Inventario.findByIdAndRemove({_id:id});
+
+           //Obtener el registro del producto
+           let prod = await Producto.findById({_id:reg.producto});
+
+           //Calculo del nuevo stock
+            let nuevo_stock = parseInt(prod.stock) - parseInt(reg.cantidad);
+
+            //Actualizacion del nuevo stock al producto
+           let producto = await Producto.findByIdAndUpdate({_id:reg.producto},{
+                stock : nuevo_stock
+           })
+           
+           res.status(200).send({data:producto});
+         }else{
+            res.status(500).send({message:'NoAcceso'});
+        }
+    }else{
+        res.status(500).send({message:'NoAcceso'});
+    }
+}
 module.exports = {
     registro_producto_admin,
     listar_productos_admin,
@@ -171,4 +226,6 @@ module.exports = {
     obtener_producto_admin,
     actualizar_producto_admin,
     eliminar_producto_admin,
+    listar_inventario_producto_admin,
+    eliminar_inventario_producto_admin,
 }
