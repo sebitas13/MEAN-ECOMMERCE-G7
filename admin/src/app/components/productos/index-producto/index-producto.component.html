@@ -76,10 +76,38 @@
                                     </button>
                                     <div class="dropdown-menu">   
                                       <a  class="dropdown-item" [routerLink]="['/panel/productos',item._id]" >Editar producto</a>
+                                      <a  class="dropdown-item" style="cursor: pointer;" data-toggle="modal"  [attr.data-target]="'#delete-'+item._id" >Eliminar producto</a>
+
                                       <!-- <a style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#delete-'+item._id" class="dropdown-item">Eliminar producto</a>
                                      -->
                                     </div>
                                   </div>
+
+                                  <div class="modal fade" id="delete-{{item._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Confirmar eliminacion </h4>
+                                          <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p class="fs-sm">Esta seguro de eliminar {{item.titulo}} ? </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                          <button  *ngIf="!load_btn" class="btn btn-primary btn-sm"  (click)="eliminar(item._id)" type="button">Eliminar</button>
+                                              <!-- Button with growing spinner and text -->
+                                              <button  *ngIf="load_btn"   type="button" class="btn btn-secondary" disabled>
+                                                <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                                                eliminando...
+                                              </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+        
+
+
 
                             </td>
                           </tr>
