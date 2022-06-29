@@ -11,6 +11,7 @@ var port = process.env.PORT || 4201;
 var cliente_route = require('./routes/cliente');
 var admin_route = require('./routes/admin');
 var producto_route = require('./routes/producto');
+var cupon_route = require('./routes/cupon');
 
 
 mongoose
@@ -34,6 +35,7 @@ app.use((req,res,next)=>{
 app.use('/api',cliente_route);
 app.use('/api',admin_route);
 app.use('/api',producto_route);
+app.use('/api',cupon_route);
 
 
 
