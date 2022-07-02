@@ -25,6 +25,7 @@ import { UpdateProductoComponent } from './components/productos/update-producto/
 import { InventarioProductoComponent } from './components/productos/inventario-producto/inventario-producto.component';
 import { CreateCuponComponent } from './components/cupones/create-cupon/create-cupon.component';
 import { IndexCuponComponent } from './components/cupones/index-cupon/index-cupon.component';
+import { UpdateCuponComponent } from './components/cupones/update-cupon/update-cupon.component';
 
 
 
@@ -44,6 +45,7 @@ import { IndexCuponComponent } from './components/cupones/index-cupon/index-cupo
     InventarioProductoComponent,
     CreateCuponComponent,
     IndexCuponComponent,
+    UpdateCuponComponent,
   ],
   imports: [
     BrowserModule,
