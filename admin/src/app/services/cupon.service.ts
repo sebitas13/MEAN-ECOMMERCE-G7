@@ -37,4 +37,11 @@ export class CuponService {
       this.url + 'obtener_cupon_admin/'+id,{ headers: headers }
     );
   }
+
+  actualizar_cupon_admin(id:any,data:any,token:any): Observable<any> {
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+    return this._http.put(
+      this.url + 'actualizar_cupon_admin/'+id,data,{ headers: headers }
+    );
+  }
 }

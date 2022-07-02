@@ -32,8 +32,8 @@ export class CreateCuponComponent implements OnInit {
     if(registroForm.valid){
       this._cuponService.registro_cupon_admin(this.cupon,this.token).subscribe(
         response=>{
-          console.log(response);
-          console.log(response);
+          
+         
               iziToast.show({
                 title:'SUCCESS',
                 titleColor:'#1DC74C',

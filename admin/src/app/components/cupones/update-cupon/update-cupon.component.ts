@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CuponService } from 'src/app/services/cupon.service';
 
+declare var iziToast:any;
+
 @Component({
   selector: 'app-update-cupon',
   templateUrl: './update-cupon.component.html',
@@ -13,6 +15,7 @@ export class UpdateCuponComponent implements OnInit {
   public load_btn = false;
   public token:any;
   public id:any;
+  public load_data = true;
 
   constructor(
     private _cuponService : CuponService,
@@ -32,8 +35,10 @@ export class UpdateCuponComponent implements OnInit {
           response=>{
             if(response == undefined){
               this.cupon = undefined;
+              this.load_data = false;
             }else{
               this.cupon = response.data;
+              this.load_data = false;
             }
             console.log(this.cupon);
             
@@ -46,6 +51,32 @@ export class UpdateCuponComponent implements OnInit {
   }
 
   actualizar(actualizarForm:any){
+    if(actualizarForm.valid){
+      this.load_btn = true;
+      this._cuponService.actualizar_cupon_admin(this.id,this.cupon,this.token).subscribe(
+        response=>{
+          iziToast.show({
+            title:'SUCCESS',
+            titleColor:'#1DC74C',
+            class:'text-success',
+            position:'topRight',
+            message : 'Se actualizo el Cupon'
+        });
+            this.load_btn = false;
+            this._router.navigate(['/panel/cupones']);
+
+        }
+      );
+      
+    }else{
+      iziToast.show({
+        title:'ERROR',
+        titleColor:'red',
+        class:'text-danger',
+        position:'topRight',
+        message : 'Datos no validos del formulario'
+    });
+    }
 
   }
 
