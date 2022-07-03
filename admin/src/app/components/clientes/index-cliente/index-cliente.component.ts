@@ -109,7 +109,7 @@ export class IndexClienteComponent implements OnInit {
           titleColor:'#1DC74C',
           class:'text-success',
           position:'topRight',
-          message : 'Registro cliente eliminado'
+          message : 'Registro cupon eliminado'
         });
 
         $('#delete-'+id).modal('hide');
