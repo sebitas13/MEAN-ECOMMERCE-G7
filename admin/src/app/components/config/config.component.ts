@@ -17,6 +17,8 @@ export class ConfigComponent implements OnInit {
   public config:any = {};
   public titulo_cat = '';
   public icono_cat = '';
+  //public file: File = undefined!;
+  public file:any = undefined;
 
   constructor(private _adminService : AdminService) { 
 
@@ -57,6 +59,36 @@ export class ConfigComponent implements OnInit {
         message : 'Te falta ingresar la categoria e icono'
     });
     }
+  }
+
+  actualizar(confForm:any){
+      if(confForm.valid){
+
+        let data = {
+          titulo : confForm.value.titulo,
+          serie : confForm.value.serie,
+          correlativo : confForm.value.correlativo,
+          categorias : this.config.categorias,
+          logo : this.file
+        }
+
+        console.log(data);
+        
+        this._adminService.actualiza_config_admin("62c31e61c6af86d0c416a4a9",this.token).subscribe(
+          response=>{
+            console.log(response);
+            
+          }
+        )
+      }else{
+        iziToast.show({
+          title:'ERROR',
+          titleColor:'red',
+          class:'text-danger',
+          position:'topRight',
+          message : 'Complete correctamente el formulario'
+      });
+      }
   }
 
 }

@@ -56,6 +56,14 @@ export class AdminService {
 
    //Servicio confifuracion
 
+   actualiza_config_admin(id:any,token:any): Observable<any> {
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+    return this._http.put(
+      this.url + 'actualiza_config_admin/'+id,
+      { headers: headers }
+    );
+  }
+
    obtener_config_admin(token:any): Observable<any> {
     let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
     return this._http.get(
