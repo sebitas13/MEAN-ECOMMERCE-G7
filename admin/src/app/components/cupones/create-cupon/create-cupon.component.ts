@@ -62,6 +62,8 @@ export class CreateCuponComponent implements OnInit {
         position:'topRight',
         message : 'Datos no validos del formulario'
     });
+
+    this.load_btn = false;
     }
   }
 }
