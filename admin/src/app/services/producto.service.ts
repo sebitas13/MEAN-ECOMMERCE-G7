@@ -85,4 +85,10 @@ export class ProductoService {
       this.url + 'eliminar_inventario_producto_admin/'+id,{ headers: headers });
   }
 
+  actualizar_producto_variedades_admin(data:any,id:any, token:any): Observable<any> {
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+       return this._http.put(
+      this.url + 'actualizar_producto_variedades_admin/'+id,data,{ headers: headers });
+  }
+
 }

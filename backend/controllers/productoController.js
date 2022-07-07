@@ -219,6 +219,30 @@ const eliminar_inventario_producto_admin = async function(req,res){
         res.status(500).send({message:'NoAcceso'});
     }
 }
+
+const actualizar_producto_variedades_admin = async function(req, res){
+    if(req.user){
+        if(req.user.role == 'admin'){
+
+            let id = req.params['id'];
+            let data = req.body;
+
+           
+            let reg = await Producto.findByIdAndUpdate({_id:id},{
+                titulo_variedad : data.titulo_variedad,
+                variedades : data.variedades
+
+            });
+               res.status(200).send({data:reg});
+
+        }else{
+            res.status(200).send({mensaje:'Error server hash',data:undefined});
+        }
+    }else{
+        res.status(200).send({mensaje:'Error server hash',data:undefined});
+    }
+}
+
 module.exports = {
     registro_producto_admin,
     listar_productos_admin,
@@ -228,4 +252,5 @@ module.exports = {
     eliminar_producto_admin,
     listar_inventario_producto_admin,
     eliminar_inventario_producto_admin,
+    actualizar_producto_variedades_admin,
 }
