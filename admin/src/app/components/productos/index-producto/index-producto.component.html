@@ -16,16 +16,23 @@
         </div>
         <div class="card-header">
             <div class="row">
-                <div class="col-6">
+                <div class="col-8">
                             <!-- Button addon on the right -->
                         <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Titulo del producto" name="filtro"  [(ngModel)]="filtro"> 
-                            <button class="btn btn-primary" type="button" (click)="filtrar()" >Filtrar</button>
-                            <button class="btn btn-info" type="button" (click)="resetear()" >Refresh</button>
+                            <input class="form-control"  type="text" placeholder="Titulo del producto" name="filtro"  [(ngModel)]="filtro"> 
+                            <div class="input-group-append ml-3">
+                              <button class="btn btn-primary mr-2" type="button" (click)="filtrar()" >Filtrar</button>
+                              <button class="btn btn-info" type="button" (click)="resetear()" >Refresh</button>
+                            </div>
                         </div>
 
                        
                 </div>
+
+                <div class="col-12 mt-3">
+                  <button class="btn btn-success" (click)="download_excel()">Exportar a excel</button>
+                </div>
+               
             </div>
         </div>
        
