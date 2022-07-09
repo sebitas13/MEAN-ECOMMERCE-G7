@@ -66,7 +66,6 @@ export class CreateProductoComponent implements OnInit {
                   position:'topRight',
                   message : 'falta subir la portada padre'
               });
-
           }else{
             console.log(this.producto);
             console.log(this.file);
@@ -90,7 +89,6 @@ export class CreateProductoComponent implements OnInit {
             );
             
           }
-
       }else{
             iziToast.show({
               title:'ERROR',

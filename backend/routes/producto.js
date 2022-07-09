@@ -22,7 +22,7 @@ api.put('/eliminar_imagen_galeria_admin/:id',auth.auth,productoController.elimin
 //inventario
 api.get('/listar_inventario_producto_admin/:id',auth.auth,productoController.listar_inventario_producto_admin);
 api.delete('/eliminar_inventario_producto_admin/:id',auth.auth, productoController.eliminar_inventario_producto_admin);
-//api.post('/registro_inventario_producto_admin',auth.auth,productoController.registro_producto_admin);
+api.post('/registro_inventario_producto_admin',auth.auth,productoController.registro_inventario_producto_admin);
 
 //public
 //api.get('listar_productos_publico/:filtro?',productoController.eliminar_productos_publico);

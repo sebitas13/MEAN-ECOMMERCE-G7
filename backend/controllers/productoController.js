@@ -95,18 +95,13 @@ const obtener_producto_admin = async function(req,res){
 const actualizar_producto_admin = async function(req, res){
     if(req.user){
         if(req.user.role == 'admin'){
-
             let id = req.params['id'];
             let data = req.body;
-
-           
-
             if(req.files){
 
                 var img_path = req.files.portada.path;
                 var name = img_path.split('\\');
-                var portada_name = name[2];
-                
+                var portada_name = name[2];      
                 //hay imagen
                 let reg = await Producto.findByIdAndUpdate({_id:id},{
                     titulo: data.titulo,
@@ -116,10 +111,7 @@ const actualizar_producto_admin = async function(req, res){
                     descripcion : data.descripcion,
                     contenido:data.contenido,
                     portada: portada_name
-    
                    });
-
-
                         fs.stat('./uploads/productos/'+reg.portada,function(err){
                             if(!err){
                                 fs.unlink('./uploads/productos/'+reg.portada,(err)=>{
@@ -127,8 +119,6 @@ const actualizar_producto_admin = async function(req, res){
                                 });
                             }
                         })
-
-
                    res.status(200).send({data:reg});
             }else{
                 //no imagen
@@ -139,18 +129,9 @@ const actualizar_producto_admin = async function(req, res){
                 categoria : data.categoria,
                 descripcion : data.descripcion,
                 contenido:data.contenido,
-
                })
                res.status(200).send({data:reg});
             }
-
-           
-
-            // data.slug = data.titulo.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
-            // data.portada = portada_name;
-            // let reg = await producto.create(data);
-
-          //  res.status(200).send({data:reg});
         }else{
             res.status(200).send({mensaje:'Error server hash',data:undefined});
         }
@@ -180,7 +161,7 @@ const listar_inventario_producto_admin = async function(req,res){
         if(req.user.role  == 'admin'){
 
             var id = req.params['id'];
-            var reg =  await Inventario.find({producto:id}).populate('admin');
+            var reg =  await Inventario.find({producto:id}).populate('admin').sort({createAt:-1});
             res.status(200).send({data:reg});
            
          }else{
@@ -212,6 +193,33 @@ const eliminar_inventario_producto_admin = async function(req,res){
            })
            
            res.status(200).send({data:producto});
+         }else{
+            res.status(500).send({message:'NoAcceso'});
+        }
+    }else{
+        res.status(500).send({message:'NoAcceso'});
+    }
+}
+
+const registro_inventario_producto_admin = async function(req,res){
+    if(req.user){
+        if(req.user.role  == 'admin'){
+
+            let data  = req.body;
+            let reg = await Inventario.create(data);
+
+            //Obtener el registro del producto
+           let prod = await Producto.findById({_id:reg.producto});
+           //Calculo del nuevo stock
+                                //stock acutal          stock aumentar
+           let nuevo_stock = parseInt(prod.stock) + parseInt(reg.cantidad);
+
+            //Actualizacion del nuevo stock al producto
+            let producto = await Producto.findByIdAndUpdate({_id:reg.producto},{
+                stock : nuevo_stock
+           })
+
+           res.status(200).send({data:reg});
          }else{
             res.status(500).send({message:'NoAcceso'});
         }
@@ -299,6 +307,7 @@ module.exports = {
     listar_inventario_producto_admin,
     eliminar_inventario_producto_admin,
     actualizar_producto_variedades_admin,
+    registro_inventario_producto_admin,
     agregar_imagen_galeria_admin,
     eliminar_imagen_galeria_admin,
 }

@@ -11,8 +11,6 @@ var CuponSchema = Schema({
     limite : {type:Number ,required:true},
     createAt : {type:Date,default: Date.now,require:true}
 
-
-    
 });
 
 module.exports = mongoose.model('cupon',CuponSchema);
