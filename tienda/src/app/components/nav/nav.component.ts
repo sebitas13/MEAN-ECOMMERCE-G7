@@ -20,12 +20,7 @@ export class NavComponent implements OnInit {
     this.token = localStorage.getItem('token');
     this.id = localStorage.getItem('_id');
 
-    if(localStorage.getItem('user_data')){
-      this.item = localStorage.getItem('user_data');
-      this.user_local = JSON.parse(this.item);
-    }else{
-      this.user_local=undefined;
-    }
+    
 
     console.log(this.user_local);
     
@@ -35,6 +30,12 @@ export class NavComponent implements OnInit {
         
         this.user = response.data;
         localStorage.setItem('user_data',JSON.stringify(this.user));
+        if(localStorage.getItem('user_data')){
+          this.item = localStorage.getItem('user_data');
+          this.user_local = JSON.parse(this.item);
+        }else{
+          this.user_local=undefined;
+        }
       },
       error=>{
         console.log(error);
