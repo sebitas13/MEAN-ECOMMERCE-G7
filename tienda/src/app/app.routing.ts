@@ -4,6 +4,8 @@ import { InicioComponent } from "./components/inicio/inicio.component";
 import { LoginComponent } from "./components/login/login.component";
 import { PerfilComponent } from "./components/usuario/perfil/perfil.component";
 
+import { AuthGuard } from "./guards/auth.guard";
+
 const appRoute : Routes = [
     {
         path:'', component: InicioComponent
@@ -12,8 +14,8 @@ const appRoute : Routes = [
         path:'login', component: LoginComponent
     },
     {
-        path:'cuenta/perfil', component: PerfilComponent
-    }
+        path:'cuenta/perfil', component: PerfilComponent, canActivate : [AuthGuard]
+    },
 ]
 
 export const appRoutingProviders : any[] = [];

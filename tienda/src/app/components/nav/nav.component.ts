@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class NavComponent implements OnInit {
  // public item :any; //agregado sebas
 
   constructor(
-    private _clienteService : ClienteService
+    private _clienteService : ClienteService,
+    private _router : Router
   ) {
     this.token = localStorage.getItem('token');
     this.id = localStorage.getItem('_id');
@@ -51,6 +53,12 @@ export class NavComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  }
+
+  logout(){
+    window.location.reload(); //refrescad de paginang 
+    localStorage.clear();
+    this._router.navigate(['/']);
   }
 
 }
