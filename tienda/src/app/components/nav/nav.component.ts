@@ -28,14 +28,14 @@ export class NavComponent implements OnInit {
       response=>{
         
         this.config_global = response.data; //aca estaran todas las categorias, en el global
-        console.log(this.config_global);
+        //console.log(this.config_global);
         
       }
     )
 
     
 
-    console.log(this.user_local);
+    //console.log(this.user_local);
     
     if(this.token){
 
