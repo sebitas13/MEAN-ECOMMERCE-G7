@@ -18,44 +18,45 @@
         <!-- Toolbar -->
         <div class="d-flex align-items-center order-lg-3">
           <ul class="nav nav-tools flex-nowrap">
-            
+            <li class="nav-item d-lg-block d-none mb-0">
               <ng-container *ngIf ="user_local==undefined">
-                <li class="nav-item d-lg-block d-none mb-0">
-                  <a [routerLink]="['/login']" class="nav-tool">
+                  <a [routerLink]="['/login']" class="nav-tool" >
                     <i class="cxi-profile nav-tool-icon"></i>
                     <span class="nav-tool-label">Iniciar sesion</span>
                   </a>
-                </li>
+                </ng-container>
+                <ng-container *ngIf ="user_local">
+                  <li class="nav-item d-lg-block d-none dropdown">
+                      <a  class="nav-tool dropdown-toggle" toggle="dropdown" style="cursor: pointer;"> 
+                        <i class="cxi-profile nav-tool-icon"></i>
+                        <span class="nav-tool-label">{{user_local.nombres}}</span>
+                      </a>
+  
+                            <!-- Dropdown example 3 -->
+                        <div class="dropdown-menu">
+                          
+                          <a [routerLink]="['/cuenta/perfil']" routerLinkActive="active" class="dropdown-item">
+                            <i class="cxi-profile me-2"></i>
+                            Perfil
+                            <!-- <span class="badge rounded-pill bg-danger ms-2">3</span> -->
+                          </a>
+                          <a href="#" class="dropdown-item">
+                            <i class="cxi-comment me-2"></i>
+                            Messages
+                            <span class="badge rounded-pill bg-success ms-2">5</span>
+                          </a>
+                          <a href="#" class="dropdown-item">
+                            <i class="cxi-external-link me-2"></i>
+                            Settings
+                            <span class="badge rounded-pill bg-warning ms-2">1</span>
+                          </a>
+                        </div>
+                  </li>
+                </ng-container>
+            </li>
                 
-              </ng-container>
-              <ng-container *ngIf ="user_local">
-                <li class="nav-item d-lg-block d-none dropdown">
-                    <a  class="nav-tool dropdown-toggle" toggle="dropdown" style="cursor: pointer;">        <!--  [routerLink]="['/login']" -->
-                      <i class="cxi-profile nav-tool-icon"></i>
-                      <span class="nav-tool-label">{{user_local.nombres}}</span>
-                    </a>
-
-                          <!-- Dropdown example 3 -->
-                      <div class="dropdown-menu">
-                        
-                        <a [routerLink]="['/cuenta/perfil']" routerLinkActive="active" class="dropdown-item">
-                          <i class="cxi-profile me-2"></i>
-                          Perfil
-                          <!-- <span class="badge rounded-pill bg-danger ms-2">3</span> -->
-                        </a>
-                        <a href="#" class="dropdown-item">
-                          <i class="cxi-comment me-2"></i>
-                          Messages
-                          <span class="badge rounded-pill bg-success ms-2">5</span>
-                        </a>
-                        <a href="#" class="dropdown-item">
-                          <i class="cxi-external-link me-2"></i>
-                          Settings
-                          <span class="badge rounded-pill bg-warning ms-2">1</span>
-                        </a>
-                      </div>
-                </li>
-              </ng-container>
+              
+             
             
             <li class="divider-vertical mb-0 d-lg-block d-none"></li>
             <li class="nav-item align-self-center mb-0">

@@ -171,6 +171,8 @@ const actualizar_perfil_cliente_guest = async function(req,res){
         var id = req.params['id'];
         var data = req.body;
 
+        console.log(data.password);
+
         if(data.password){ //si actualiza la contraseña , se la encriptamos
             console.log("con contraseña");
             bcrypt.hash(data.password,null,null,async function(err,hash){

@@ -11,7 +11,7 @@ export class SiderbarComponent implements OnInit {
   public token:any;
   public user:any = undefined;
   public user_local : any = {};
-  public item :any; //agregado sebas
+  //public item :any; //agregado sebas
   public id :any;
   constructor(
     private _clienteService : ClienteService
@@ -26,8 +26,8 @@ export class SiderbarComponent implements OnInit {
           this.user = response.data;
           localStorage.setItem('user_data',JSON.stringify(this.user));
           if(localStorage.getItem('user_data')){
-            this.item = localStorage.getItem('user_data');
-            this.user_local = JSON.parse(this.item);
+           // this.item = localStorage.getItem('user_data');
+            this.user_local = JSON.parse(localStorage.getItem('user_data')!);
           }else{
             this.user_local=undefined;
           }

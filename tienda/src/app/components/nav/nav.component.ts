@@ -12,7 +12,7 @@ export class NavComponent implements OnInit {
   public id :any;
   public user:any = undefined;
   public user_local : any = {};
-  public item :any; //agregado sebas
+ // public item :any; //agregado sebas
 
   constructor(
     private _clienteService : ClienteService
@@ -25,14 +25,16 @@ export class NavComponent implements OnInit {
     console.log(this.user_local);
     
     if(this.token){
+
       this._clienteService.obtener_cliente_guest(this.id,this.token).subscribe(
         response=>{
           
           this.user = response.data;
           localStorage.setItem('user_data',JSON.stringify(this.user));
+          
           if(localStorage.getItem('user_data')){
-            this.item = localStorage.getItem('user_data');
-            this.user_local = JSON.parse(this.item);
+           // this.item = localStorage.getItem('user_data');
+            this.user_local = JSON.parse(localStorage.getItem('user_data')!);
           }else{
             this.user_local=undefined;
           }
@@ -42,6 +44,8 @@ export class NavComponent implements OnInit {
           this.user = undefined;
         }
       )
+    }else{
+      this.user_local=undefined;
     }
     
    }
