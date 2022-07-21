@@ -31,41 +31,41 @@
                 Delete account
               </a>
             </div>
-            <form>
+            <form #actualizarForm="ngForm" (ngSubmit)="actualizar(actualizarForm)">
               <div class="row pb-3">
                 <div class="col-sm-6 form-group">
                   <label for="ac-fn">Nombres</label>
-                  <input type="text" class="form-control form-control-lg" name="nombres" [(ngModel)]="cliente.nombres" placeholder="Nombres completos">
+                  <input required type="text" class="form-control form-control-lg" name="nombres" [(ngModel)]="cliente.nombres" placeholder="Nombres completos">
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-ln">Apellidos</label>
-                  <input type="text" class="form-control form-control-lg" name="apeliidos" [(ngModel)]="cliente.apellidos" placeholder="Apellidos completos">
+                  <input required type="text" class="form-control form-control-lg" name="apeliidos" [(ngModel)]="cliente.apellidos" placeholder="Apellidos completos">
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-email">Correo electronico</label>
-                  <input type="email" class="form-control form-control-lg" name="email" [(ngModel)]="cliente.email" placeholder="examle@gmail.com">
+                  <input required type="email" class="form-control form-control-lg"  readonly value="{{cliente.email}}" placeholder="examle@gmail.com">
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-phone">Contraseña</label>
-                  <input type="password" class="form-control form-control-lg" placeholder="Nueva contraseña" name="password" [(ngModel)]="cliente.password">
+                  <input type="password" autocomplete="nope" class="form-control form-control-lg" placeholder="Nueva contraseña" name="password" [(ngModel)]="cliente.password">
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-email">Telefono</label>
-                  <input type="number" class="form-control form-control-lg" name="telefono" [(ngModel)]="cliente.telefono" placeholder="913819341">
+                  <input required type="number" class="form-control form-control-lg" name="telefono" [(ngModel)]="cliente.telefono" placeholder="913819341">
                 </div>
 
                 <div class="col-sm-6 form-group">
                   <label for="ac-email">Fecha de nacimiento</label>
-                  <input type="date" class="form-control form-control-lg" name="f_nacimiento" [(ngModel)]="cliente.f_nacimiento">
+                  <input required type="date" class="form-control form-control-lg" name="f_nacimiento" [(ngModel)]="cliente.f_nacimiento">
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-email">DNI</label>
-                  <input type="number" class="form-control form-control-lg" name="dni" [(ngModel)]="cliente.dni" placeholder="47701709">
+                  <input required type="number" class="form-control form-control-lg" name="dni" [(ngModel)]="cliente.dni" placeholder="47701709">
                 </div>
               
                 <div class="col-sm-6 form-group">
                   <label for="ac-country">Genero</label>
-                  <select id="ac-country" class="custom-select custom-select-lg">
+                  <select id="ac-country" class="custom-select custom-select-lg" name="genero" [(ngModel)]="cliente.genero">
                     <option value="" disabled selected>Seleccionar</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-city">Pais</label>
-                  <select id="ac-city" class="custom-select custom-select-lg">
+                  <select id="ac-city" class="custom-select custom-select-lg" name="pais" [(ngModel)]="cliente.pais">
                     <option value="" disabled>Seleccionar pais</option>
                     <option value="Argentina">Argentina</option>
                     <option value="Colombia">Colombia</option>

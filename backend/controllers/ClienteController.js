@@ -165,6 +165,49 @@ const obtener_cliente_guest = async function(req,res){
 
 }
 
+const actualizar_perfil_cliente_guest = async function(req,res){
+    if(req.user){
+       
+        var id = req.params['id'];
+        var data = req.body;
+
+        if(data.password){ //si actualiza la contraseña , se la encriptamos
+            console.log("con contraseña");
+            bcrypt.hash(data.password,null,null,async function(err,hash){
+                var reg = await Cliente.findByIdAndUpdate({_id:id},{
+                    nombres : data.nombres,
+                    apellidos : data.apellidos,
+                   // email : data.email,
+                    telefono : data.telefono,
+                    f_nacimiento : data.f_nacimiento,
+                    dni: data.dni,
+                    genero : data.genero,
+                    pais : data.pais,
+                    password : hash,
+                });
+                res.status(200).send({data:reg});
+            });
+            
+        }else{ //el cliente no necesariamente acualizar a su contraseña
+            console.log("Sin contraseña");
+            var reg = await Cliente.findByIdAndUpdate({_id:id},{
+                nombres : data.nombres,
+                apellidos : data.apellidos,
+             //   email : data.email,
+                telefono : data.telefono,
+                f_nacimiento : data.f_nacimiento,
+                dni: data.dni,
+                genero : data.genero,
+                pais : data.pais,
+            });
+            res.status(200).send({data:reg});
+        }
+    }else{
+        res.status(500).send({message:'NoAcceso'});
+    }
+
+}
+
 const actualizar_cliente_admin = async function(req,res){
     if(req.user){
         if(req.user.role  == 'admin'){
@@ -219,5 +262,6 @@ module.exports = {
     actualizar_cliente_admin,
     eliminar_cliente_admin,
     obtener_cliente_guest,
+    actualizar_perfil_cliente_guest,
 }
 
