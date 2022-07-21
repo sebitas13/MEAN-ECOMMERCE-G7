@@ -35,8 +35,8 @@ export class IndexProductoComponent implements OnInit {
 
     this._clienteService.listar_productos_publico(this.filter_producto).subscribe(
       response=>{
-     
-        this.productos = response.data;
+
+     this.productos = response.data;
         this.load_data = false;
       }
     )
@@ -45,16 +45,16 @@ export class IndexProductoComponent implements OnInit {
   ngOnInit(): void {
     var slider : any = document.getElementById('slider');
     noUiSlider.create(slider, {
-        start: [0, 1000],
+        start: [0, 3000],
         connect: true,
         range: {
             'min': 0,
-            'max': 1000
+            'max': 3000
         },
         tooltips: [true,true],
         pips: {
           mode: 'count', 
-          values: 5,
+          values: 8,
           
         }
     })
@@ -99,6 +99,27 @@ export class IndexProductoComponent implements OnInit {
         
       }
     )
+  }
+
+  buscar_precios(){
+
+    this._clienteService.listar_productos_publico(this.filter_producto).subscribe(
+      response=>{
+
+            this.productos = response.data;
+            let min = parseInt($('.cs-range-slider-value-min').val());
+            let max = parseInt($('.cs-range-slider-value-max').val());
+        
+            console.log(min);
+            console.log(max);
+        
+            this.productos = this.productos.filter((item)=>{
+              return item.precio >= min && item.precio<=max
+            })
+      }
+    )
+    
+    
   }
 
 }
