@@ -6,12 +6,10 @@
         <div class="container">
           <ol class="breadcrumb breadcrumb-alt mb-0">
             <li class="breadcrumb-item">
-              <a href="index.html"><i class="cxi-home"></i></a>
+              <a [routerLink]="['/']"><i class="cxi-home"></i></a>
             </li>
-            <li class="breadcrumb-item">
-              <a href="#">Account</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">My profile</li>
+            
+            <li class="breadcrumb-item active" aria-current="page">Mi perfil</li>
           </ol>
         </div>
       </nav>
@@ -36,83 +34,60 @@
             <form>
               <div class="row pb-3">
                 <div class="col-sm-6 form-group">
-                  <label for="ac-fn">First Name</label>
-                  <input type="text" id="ac-fn" class="form-control form-control-lg" value="Annette">
+                  <label for="ac-fn">Nombres</label>
+                  <input type="text" class="form-control form-control-lg" name="nombres" [(ngModel)]="cliente.nombres" placeholder="Nombres completos">
                 </div>
                 <div class="col-sm-6 form-group">
-                  <label for="ac-ln">Last Name</label>
-                  <input type="text" id="ac-ln" class="form-control form-control-lg" value="Black">
+                  <label for="ac-ln">Apellidos</label>
+                  <input type="text" class="form-control form-control-lg" name="apeliidos" [(ngModel)]="cliente.apellidos" placeholder="Apellidos completos">
                 </div>
                 <div class="col-sm-6 form-group">
-                  <label for="ac-email">Email</label>
-                  <input type="email" id="ac-email" class="form-control form-control-lg" value="ann.black@example.com">
+                  <label for="ac-email">Correo electronico</label>
+                  <input type="email" class="form-control form-control-lg" name="email" [(ngModel)]="cliente.email" placeholder="examle@gmail.com">
                 </div>
                 <div class="col-sm-6 form-group">
-                  <label for="ac-phone">Phone</label>
-                  <input type="text" id="ac-phone" class="form-control form-control-lg" value="(629) 555-0129">
+                  <label for="ac-phone">Contraseña</label>
+                  <input type="password" class="form-control form-control-lg" placeholder="Nueva contraseña" name="password" [(ngModel)]="cliente.password">
                 </div>
                 <div class="col-sm-6 form-group">
-                  <label for="ac-password">New Password</label>
-                  <div class="cs-password-toggle input-group-overlay">
-                    <input type="password" id="ac-password" class="form-control form-control-lg">
-                    <div class="input-group-append-overlay">
-                      <label class="btn cs-password-toggle-btn input-group-text">
-                        <input type="checkbox" class="custom-control-input">
-                        <i class="cxi-eye cs-password-toggle-indicator"></i>
-                        <span class="sr-only">Show password</span>
-                      </label>
-                    </div>
-                  </div>
+                  <label for="ac-email">Telefono</label>
+                  <input type="number" class="form-control form-control-lg" name="telefono" [(ngModel)]="cliente.telefono" placeholder="913819341">
+                </div>
+
+                <div class="col-sm-6 form-group">
+                  <label for="ac-email">Fecha de nacimiento</label>
+                  <input type="date" class="form-control form-control-lg" name="f_nacimiento" [(ngModel)]="cliente.f_nacimiento">
                 </div>
                 <div class="col-sm-6 form-group">
-                  <label for="ac-password-confirm">Confirm Password</label>
-                  <div class="cs-password-toggle input-group-overlay">
-                    <input type="password" id="ac-password-confirm" class="form-control form-control-lg">
-                    <div class="input-group-append-overlay">
-                      <label class="btn cs-password-toggle-btn input-group-text">
-                        <input type="checkbox" class="custom-control-input">
-                        <i class="cxi-eye cs-password-toggle-indicator"></i>
-                        <span class="sr-only">Show password</span>
-                      </label>
-                    </div>
-                  </div>
+                  <label for="ac-email">DNI</label>
+                  <input type="number" class="form-control form-control-lg" name="dni" [(ngModel)]="cliente.dni" placeholder="47701709">
                 </div>
+              
                 <div class="col-sm-6 form-group">
-                  <label for="ac-country">Country</label>
+                  <label for="ac-country">Genero</label>
                   <select id="ac-country" class="custom-select custom-select-lg">
-                    <option value="" disabled>Choose country</option>
-                    <option value="argentina">Australia</option>
-                    <option value="brazil">Brazil</option>
-                    <option value="belgium">Belgium</option>
-                    <option value="france">France</option>
-                    <option value="germany">Germany</option>
-                    <option value="uk">United Kingdom</option>
-                    <option value="usa" selected>USA</option>
+                    <option value="" disabled selected>Seleccionar</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Prefiero no decir</option>
+                    
                   </select>
                 </div>
                 <div class="col-sm-6 form-group">
-                  <label for="ac-city">City</label>
+                  <label for="ac-city">Pais</label>
                   <select id="ac-city" class="custom-select custom-select-lg">
-                    <option value="" disabled>Choose city</option>
-                    <option value="belgium">Brussels</option>
-                    <option value="germany">Berlin</option>
-                    <option value="uk">London</option>
-                    <option value="argentina">Melbourne</option>
-                    <option value="usa" selected>New Jersey</option>
-                    <option value="france">Paris</option>
-                    <option value="brazil">Rio de Janeiro</option>
+                    <option value="" disabled>Seleccionar pais</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Peru" selected>Peru</option>
+  
                   </select>
                 </div>
-                <div class="col-sm-6 form-group">
-                  <label for="ac-address">Address</label>
-                  <input type="text" id="ac-address" class="form-control form-control-lg" value="2464 Royal Ln. Mesa, New Jersey">
-                </div>
-                <div class="col-sm-6 form-group">
-                  <label for="ac-zip">ZIP Code</label>
-                  <input type="text" id="ac-zip" class="form-control form-control-lg" value="45463">
-                </div>
+                
               </div>
-              <button type="submit" class="btn btn-primary btn-lg">&nbsp;Save changes&nbsp;</button>
+              <button type="submit" class="btn btn-primary btn-lg">&nbsp;Actualizar Perfil&nbsp;</button>
             </form>
           </div>
         </div>
