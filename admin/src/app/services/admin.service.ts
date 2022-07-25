@@ -39,6 +39,11 @@ export class AdminService {
       var decodedToken = helper.decodeToken(token);
 
       console.log(decodedToken);
+
+      if(helper.isTokenExpired(token)){
+        localStorage.clear();
+        return false;
+      }
       
       if (!decodedToken) {
         console.log('No se esta validando el token');

@@ -25,6 +25,8 @@ api.delete('/eliminar_inventario_producto_admin/:id',auth.auth, productoControll
 api.post('/registro_inventario_producto_admin',auth.auth,productoController.registro_inventario_producto_admin);
 
 //public
-//api.get('listar_productos_publico/:filtro?',productoController.eliminar_productos_publico);
+api.get('/listar_productos_publico/:filtro?',productoController.listar_productos_publico);
+api.get('/obtener_productos_slug_publico/:slug',productoController.obtener_productos_slug_publico);
+api.get('/listar_productos_recomendados_publico/:categoria',productoController.listar_productos_recomendados_publico);
 
 module.exports= api;
