@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
+declare var $;
 
 @Component({
   selector: 'app-nav',
@@ -13,6 +14,7 @@ export class NavComponent implements OnInit {
   public id :any;
   public user:any = undefined;
   public user_local : any = {};
+  public op_cart = false;
  // public item :any; //agregado sebas
   public config_global : any = {};
 
@@ -70,6 +72,16 @@ export class NavComponent implements OnInit {
     window.location.reload(); //refrescad de paginang 
     localStorage.clear();
     this._router.navigate(['/']);
+  }
+
+  op_modalcart(){
+    if(!this.op_cart){
+      this.op_cart = true;
+      $('#cart').addClass('show');
+    }else{
+      this.op_cart = false;
+      $('#cart').removeClass('show');
+    }
   }
 
 }
