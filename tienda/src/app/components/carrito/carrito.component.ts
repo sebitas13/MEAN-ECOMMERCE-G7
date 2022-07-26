@@ -15,6 +15,8 @@ export class CarritoComponent implements OnInit {
   public subtotal = 0;
   public total_pagar = 0;
 
+ 
+
   constructor(
     private _clienteService : ClienteService
   ) { 
@@ -38,6 +40,7 @@ export class CarritoComponent implements OnInit {
     })
 
     this.total_pagar = this.subtotal;
+    
   }
 
 }

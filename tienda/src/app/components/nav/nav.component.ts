@@ -21,7 +21,7 @@ export class NavComponent implements OnInit {
   public carrito_arr : Array<any> = [];
   public url;
   public subtotal = 0;
-
+  public cantidad = 0;
   constructor(
     private _clienteService : ClienteService,
     private _router : Router,
@@ -99,6 +99,17 @@ export class NavComponent implements OnInit {
     this.carrito_arr.forEach(element=>   {
       this.subtotal = this.subtotal + parseInt(element.producto.precio);
     })
+
+    this.cantidad = this.carrito_arr.length;
+  }
+
+  eliminar_item(id){
+    this._clienteService.eliminar_carrito_cliente(id, this.token).subscribe(
+      response=>{
+        console.log(response);
+        
+      }
+    )
   }
 
 }
