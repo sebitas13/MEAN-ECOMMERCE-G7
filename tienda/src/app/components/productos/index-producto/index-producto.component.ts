@@ -259,6 +259,8 @@ export class IndexProductoComponent implements OnInit {
       });
     }
   }
+
+
   agregar_producto(producto){
     let data = {
       producto : producto._id,
@@ -297,5 +299,6 @@ export class IndexProductoComponent implements OnInit {
 
   }
 
+  
 
 }
