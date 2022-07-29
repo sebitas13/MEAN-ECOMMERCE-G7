@@ -5,6 +5,7 @@ import { GLOBAL } from 'src/app/services/GLOBAL';
 import { io } from "socket.io-client";
 
 declare var $;
+declare var iziToast:any;
 
 @Component({
   selector: 'app-nav',
@@ -91,6 +92,13 @@ export class NavComponent implements OnInit {
       this.obtener_carrito();
 
     });  
+
+    this.socket.on('new-carrito-add',(data) =>{
+      console.log(data);  
+      
+      this.obtener_carrito();
+
+    }); 
   }
    
 
@@ -126,6 +134,14 @@ export class NavComponent implements OnInit {
   eliminar_item(id){
     this._clienteService.eliminar_carrito_cliente(id, this.token).subscribe(
       response=>{
+        console.log(response);
+                  iziToast.show({
+                    title:'SUCCESS',
+                    titleColor:'#1DC74C',
+                    class:'text-success',
+                    position:'topRight',
+                    message : 'produto retirado del carrito :)'
+                });
         this.socket.emit('delete-carrito',{data:response.data});
         console.log(response);
         

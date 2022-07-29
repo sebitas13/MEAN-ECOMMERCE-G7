@@ -18,6 +18,11 @@ io.on('connection',function(socket){
         io.emit('new-carrito',data);
         console.log(data);
     });
+
+    socket.on('add-carrito-add',function(data){
+        io.emit('new-carrito-add',data);
+        console.log(data);
+    });
 })
 
 

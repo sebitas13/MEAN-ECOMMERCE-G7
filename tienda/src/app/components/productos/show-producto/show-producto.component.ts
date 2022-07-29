@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { GLOBAL } from 'src/app/services/GLOBAL';
 import { GuestService } from 'src/app/services/guest.service';
+import { io } from "socket.io-client";
 declare var tns;
 declare var lightGallery;
 declare var iziToast:any;
@@ -25,6 +26,7 @@ export class ShowProductoComponent implements OnInit {
     variedad : ''   ,
     cantidad : 1  
   };
+  public socket = io('http://localhost:4201');
 
 
 
@@ -157,7 +159,9 @@ export class ShowProductoComponent implements OnInit {
                         position:'topRight',
                         message : 'Agregado al carrito :)'
                     });
+                    this.socket.emit('add-carrito-add',{data:true});
                     this.btn_cart = false;
+                    
               }
           }
         );
