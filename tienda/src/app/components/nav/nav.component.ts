@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { GLOBAL } from 'src/app/services/GLOBAL';
+import { io } from "socket.io-client";
+
 declare var $;
 
 @Component({
@@ -22,6 +24,8 @@ export class NavComponent implements OnInit {
   public url;
   public subtotal = 0;
   public cantidad = 0;
+  public socket = io('http://localhost:4201');
+
   constructor(
     private _clienteService : ClienteService,
     private _router : Router,
@@ -54,13 +58,8 @@ export class NavComponent implements OnInit {
           if(localStorage.getItem('user_data')){
            // this.item = localStorage.getItem('user_data');
             this.user_local = JSON.parse(localStorage.getItem('user_data')!);
-
-            this._clienteService.obtener_carrito_cliente(this.user_local._id,this.token).subscribe(
-              response=>{
-                this.carrito_arr = response.data;
-                this.calcular_carrito();
-              }
-            )
+            
+            this.obtener_carrito();
           }else{
             this.user_local=undefined;
           }
@@ -76,8 +75,29 @@ export class NavComponent implements OnInit {
     
    }
 
-  ngOnInit(): void {
+   obtener_carrito(){
+    this._clienteService.obtener_carrito_cliente(this.user_local._id,this.token).subscribe(
+      response=>{
+        this.carrito_arr = response.data;
+        this.calcular_carrito();
+      }
+    );
+   }
+
+   ngOnInit(): void {
+    this.socket.on('new-carrito',(data) =>{
+      console.log(data);  
+      
+      this.obtener_carrito();
+
+    });  
   }
+   
+
+  
+
+   
+ 
 
   logout(){
     window.location.reload(); //refrescad de paginang 
@@ -106,6 +126,7 @@ export class NavComponent implements OnInit {
   eliminar_item(id){
     this._clienteService.eliminar_carrito_cliente(id, this.token).subscribe(
       response=>{
+        this.socket.emit('delete-carrito',{data:response.data});
         console.log(response);
         
       }
@@ -113,3 +134,7 @@ export class NavComponent implements OnInit {
   }
 
 }
+
+
+
+

@@ -8,6 +8,20 @@ var bodyparser = require('body-parser');
 
 var port = process.env.PORT || 4201;
 
+var server = require('http').createServer(app);
+var io = require('socket.io')(server,{
+    cors : {origin: '*'}   //localhost/4200 ->  * seleciona todas las rutas
+});
+
+io.on('connection',function(socket){
+    socket.on('delete-carrito',function(data){
+        io.emit('new-carrito',data);
+        console.log(data);
+    });
+})
+
+
+
 var cliente_route = require('./routes/cliente');
 var admin_route = require('./routes/admin');
 var producto_route = require('./routes/producto');
@@ -20,7 +34,7 @@ mongoose
 .connect(process.env.MONGODB_URI) // connect('mongodb://127.0.0.1:27017/test')   process.env.MONGODB_URI
 .then(()=> console.log('Conectado a MongoAtlas'))
 .catch((err)=> console.error(err));
-app.listen(port,() => console.log('servidor en:',port));
+server.listen(port,() => console.log('servidor en:',port));
 
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(bodyparser.json({limit:'50mb', extended:true}));
