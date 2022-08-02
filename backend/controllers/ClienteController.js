@@ -7,6 +7,8 @@ var bcrypt = require('bcrypt-nodejs'); //Para encriptar el password del usuario
 
 var jwt = require('../helpers/jwt');
 
+var Direccion = require('../models/direccion');
+
 const registro_cliente = async function(req,res) {
     var data = req.body;
     var clientes_arr = []; //creamos un array para almacenar los clientes
@@ -253,6 +255,18 @@ const eliminar_cliente_admin = async function(req,res){
     }
 }
 
+/******************************** */
+//DIRECCIONES DEL CLIENTE
+
+const registro_direccion_cliente = async function(req,res){
+    if(req.user){
+        var data = req.body;
+           let reg = await Direccion.create(data);
+           res.status(200).send({data:reg});
+    }else{
+        res.status(500).send({mensaje:'Error server hash',data:undefined});
+    }
+}
 
 
 module.exports = {
@@ -265,5 +279,6 @@ module.exports = {
     eliminar_cliente_admin,
     obtener_cliente_guest,
     actualizar_perfil_cliente_guest,
+    registro_direccion_cliente
 }
 
