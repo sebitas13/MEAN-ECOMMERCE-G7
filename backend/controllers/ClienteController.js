@@ -261,6 +261,15 @@ const eliminar_cliente_admin = async function(req,res){
 const registro_direccion_cliente = async function(req,res){
     if(req.user){
         var data = req.body;
+
+        if(data.principal){
+            let direcciones = await Direccion.find({cliente:data.cliente});
+
+            direcciones.forEach(async element=>{
+                await Direccion.findByIdAndUpdate({_id:element._id},{principal:false});
+            });
+        }
+
            let reg = await Direccion.create(data);
            res.status(200).send({data:reg});
     }else{

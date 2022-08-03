@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { response } from 'express';
+import { ClienteService } from 'src/app/services/cliente.service';
 import { GuestService } from 'src/app/services/guest.service';
 declare var $:any;
+declare var iziToast:any;
 
 
 @Component({
@@ -23,10 +24,34 @@ export class DireccionesComponent implements OnInit {
   public provincias : Array<any> = [];
   public distritos : Array<any> = [];
 
+
+  public regiones_arr : Array<any> = [];
+  public provincias_arr : Array<any> = [];
+  public distritos_arr : Array<any> = [];
+
   constructor(
-    private _getService : GuestService
+    private _getService : GuestService,
+    private _clienteService : ClienteService
   ) {
     this.token = localStorage.getItem('token');
+
+    this._getService.get_Provincias().subscribe(
+      response=>{
+        this.provincias_arr = response;
+      }
+    );
+
+    this._getService.get_Regiones().subscribe(
+      response=>{
+        this.regiones_arr = response;
+      }
+    );
+
+    this._getService.get_Distritos().subscribe(
+      response=>{
+        this.distritos_arr = response;
+      }
+    );
    
    }
 
@@ -38,7 +63,7 @@ export class DireccionesComponent implements OnInit {
       $('#sl-region').prop('disabled',false);
       this._getService.get_Regiones().subscribe(
         response=>{
-          console.log(response);
+        //  console.log(response);
           response.forEach(element => {
             this.regiones.push(
               {
@@ -79,7 +104,7 @@ export class DireccionesComponent implements OnInit {
         });
       }
     );
-    console.log(this.provincias);
+   // console.log(this.provincias);
     
   }
 
@@ -96,7 +121,79 @@ export class DireccionesComponent implements OnInit {
         });
       }
     );
-    console.log(this.distritos);
+    //console.log(this.distritos);
+  }
+
+  registrar(registroForm){
+    if(registroForm.valid){
+
+      this.regiones_arr.forEach(element =>{
+        if(parseInt(element.id) == parseInt(this.direccion.region)){
+          this.direccion.region = element.name;
+        }
+      });
+
+      this.provincias_arr.forEach(element =>{
+        if(parseInt(element.id) == parseInt(this.direccion.provincia)){
+          this.direccion.provincia = element.name;
+        }
+      });
+
+      this.distritos_arr.forEach(element =>{
+        if(parseInt(element.id) == parseInt(this.direccion.distrito)){
+          this.direccion.distrito = element.name;
+        }
+      });
+
+      let data = {
+        cliente : localStorage.getItem('_id'),
+        destinatario : this.direccion.destinatario,
+        dni : this.direccion.dni,
+        zip : this.direccion.zip,
+        direccion : this.direccion.direccion,
+        telefono : this.direccion.telefono,
+        pais : this.direccion.pais,
+        region : this.direccion.region,
+        provincia : this.direccion.provincia,
+        distrito : this.direccion.distrito,
+        principal : this.direccion.principal,
+
+      }
+
+      this._clienteService.registro_direccion_cliente(data,this.token).subscribe(
+        response=>{
+          this.direccion={
+            pais: '',
+            region:'',
+            provincia : '',
+            distrito : '',
+            principal : false,
+          };
+          $('#sl-region').prop('disabled',true);
+          $('#sl-provincia').prop('disabled',true);
+          $('#sl-distrito').prop('disabled',true);
+
+          iziToast.show({
+            title:'SUCCESS',
+            titleColor:'#1DC74C',
+            class:'text-success',
+            position:'topRight',
+            message : 'Se agreggo la nueva direccion :)'
+        });
+
+        }
+      );
+      console.log(data);
+      
+    }else{
+      iziToast.show({
+        title:'ERROR',
+        titleColor:'red',
+        class:'text-danger',
+        position:'topRight',
+        message : 'Datos no validos del formulario'
+    });
+    }
   }
 
 }
