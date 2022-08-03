@@ -114,4 +114,18 @@ export class ClienteService {
     );
   }
 
+  obtener_direccion_todos_cliente(id:any,token:any): Observable<any> {
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+    return this._http.get(
+      this.url + 'obtener_direccion_todos_cliente/'+id,{ headers: headers }
+    );
+  }
+
+  cambiar_direccion_cliente_principal(id:any,cliente,token:any): Observable<any> {
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+    return this._http.put(
+      this.url + 'cambiar_direccion_cliente_principal/'+id+'/'+cliente,{data:true},{ headers: headers }
+    );
+  }
+
 }

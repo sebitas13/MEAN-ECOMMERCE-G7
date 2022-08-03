@@ -21,5 +21,7 @@ api.put('/actualizar_perfil_cliente_guest/:id',auth.auth,clienteController.actua
 //Direcciones
 
 api.post('/registro_direccion_cliente',auth.auth,clienteController.registro_direccion_cliente);
+api.get('/obtener_direccion_todos_cliente/:id',auth.auth,clienteController.obtener_direccion_todos_cliente);
+api.put('/cambiar_direccion_cliente_principal/:id/:cliente',auth.auth,clienteController.cambiar_direccion_cliente_principal);
 
 module.exports= api;
