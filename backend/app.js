@@ -33,6 +33,7 @@ var producto_route = require('./routes/producto');
 var cupon_route = require('./routes/cupon');
 var config_route = require('./routes/config');
 var carrito_route = require('./routes/carrito');
+var venta_route = require('./routes/venta');
 
 
 mongoose
@@ -59,6 +60,7 @@ app.use('/api',producto_route);
 app.use('/api',cupon_route);
 app.use('/api',config_route);
 app.use('/api',carrito_route);
+app.use('/api',venta_route);
 
 
 module.exports=app; 

@@ -34,6 +34,9 @@ export class CarritoComponent implements OnInit {
   public direccion_principal : any = {};
   public envios : Array<any> = [];
   public precio_envio = "0";
+
+  public venta : any = {};
+  public dventa : Array<any> = [];
  
 
   constructor(
@@ -41,13 +44,14 @@ export class CarritoComponent implements OnInit {
     private _guestService : GuestService
   ) { 
     this.idcliente = localStorage.getItem('_id');
+    this.venta.cliente = this.idcliente; 
     this.token = localStorage.getItem('token');
     this.url = GLOBAL.url;
     this._clienteService.obtener_carrito_cliente(this.idcliente,this.token).subscribe(
       response=>{
         this.carrito_arr = response.data;
         this.calcular_carrito();
-      
+        this.calcular_total('normal');
       }
     );
 
@@ -104,7 +108,13 @@ export class CarritoComponent implements OnInit {
       },
       onApprove : async (data,actions)=>{
         const order = await actions.order.capture();
-  
+
+        console.log(order);
+        
+        this.venta.transaccion = order.purchase_units[0].payments.captures[0].id;
+
+        console.log(this.venta);
+        
         
       },
       onError : err =>{
@@ -125,6 +135,7 @@ export class CarritoComponent implements OnInit {
           this.direccion_principal = undefined;
         }else{
           this.direccion_principal = response.data;
+          this.venta.direccion = this.direccion_principal._id;
         }
         
         
@@ -165,8 +176,14 @@ export class CarritoComponent implements OnInit {
     )
   }
 
-  calcular_total(){
+  calcular_total(envio_titulo){
     this.total_pagar = parseInt(this.subtotal.toString()) + parseInt(this.precio_envio);
+    this.venta.subtotal = this.total_pagar;
+    this.venta.envio_precio = parseInt(this.precio_envio);
+    this.venta.envio_titulo = envio_titulo;
+
+    console.log(this.venta);
+    
   }
 
 }

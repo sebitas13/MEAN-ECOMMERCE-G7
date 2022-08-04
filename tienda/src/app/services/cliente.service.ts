@@ -135,5 +135,12 @@ export class ClienteService {
     );
   }
 
+  registro_compra_cliente(data,token:any): Observable<any> {
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+    return this._http.post(
+      this.url + 'registro_compra_cliente',data,{ headers: headers }
+    );
+  }
+
 
 }
