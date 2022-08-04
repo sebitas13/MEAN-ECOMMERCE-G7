@@ -8,6 +8,7 @@ var bcrypt = require('bcrypt-nodejs'); //Para encriptar el password del usuario
 var jwt = require('../helpers/jwt');
 
 var Direccion = require('../models/direccion');
+const cliente = require('../models/cliente');
 
 const registro_cliente = async function(req,res) {
     var data = req.body;
@@ -288,6 +289,24 @@ const obtener_direccion_todos_cliente = async function(req,res){
     }
 }
 
+const obtener_direccion_principal_cliente = async function(req,res){
+    if(req.user){
+        var id = req.params['id'];
+        var direccion = undefined;
+
+        direccion = await Direccion.findOne({cliente:id,principal:true});
+        if(direccion == undefined){
+            res.status(200).send({data:undefined});
+        }else{
+            res.status(200).send({data:direccion});
+        }
+        
+        //res.status(200).send({data:direccion}); Dos res seguidos generar un ERROR
+    }else{
+        res.status(500).send({message:'NoAcceso'});
+    }
+}
+
 const cambiar_direccion_cliente_principal = async function(req,res){
     if(req.user){
            var id = req.params['id'];
@@ -320,6 +339,7 @@ module.exports = {
     actualizar_perfil_cliente_guest,
     registro_direccion_cliente,
     obtener_direccion_todos_cliente,
-    cambiar_direccion_cliente_principal
+    cambiar_direccion_cliente_principal,
+    obtener_direccion_principal_cliente
 }
 

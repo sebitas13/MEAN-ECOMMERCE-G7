@@ -55,7 +55,7 @@ const listar_productos_admin = async function(req,res){
 
 const obtener_portada = async function name(req,res) {
     var img = req.params['img'];
-    console.log(img);
+   // console.log(img); nombres de imagenes en consola ?
     fs.stat('./uploads/productos/'+img,function(err){
         if(!err){
             let path_img = './uploads/productos/'+img;

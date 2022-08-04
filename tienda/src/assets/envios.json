@@ -1,0 +1,17 @@
+[
+    {
+        "titulo":"expres",
+        "tiempo": "24 horas",
+        "precio": 50
+    },
+    {
+        "titulo":"regular",
+        "tiempo": "2 a 7 dias",
+        "precio": 12
+    },
+    {
+        "titulo":"normal",
+        "tiempo": "retiro en tienda",
+        "precio": 0
+    }
+]

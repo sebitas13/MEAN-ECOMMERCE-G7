@@ -128,4 +128,12 @@ export class ClienteService {
     );
   }
 
+  obtener_direccion_principal_cliente(id,token:any): Observable<any> {
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token});
+    return this._http.get(
+      this.url + 'obtener_direccion_principal_cliente/'+id,{ headers: headers }
+    );
+  }
+
+
 }
