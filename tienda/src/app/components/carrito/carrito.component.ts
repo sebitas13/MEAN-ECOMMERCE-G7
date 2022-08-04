@@ -4,7 +4,8 @@ import { GLOBAL } from 'src/app/services/GLOBAL';
 import { io } from "socket.io-client";
 
 declare var iziToast;
-
+declare var Cleave;
+declare var StickySidebar;
 
 @Component({
   selector: 'app-carrito',
@@ -36,6 +37,25 @@ export class CarritoComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
+    setTimeout(()=>{
+              new Cleave('#cc-number', {
+                creditCard: true,
+                onCreditCardTypeChanged: function (type) {
+                    // update UI ...
+                }
+            });
+
+            new Cleave('#cc-exp-date', {
+              date: true,
+              datePattern: ['m', 'y']
+            });
+
+          //  var sidebar = new stickySidebar('.sidebar-sticky', {topSpacing: 20});
+            var sidebar = new StickySidebar('.sidebar-sticky', {topSpacing: 20});
+
+
+    });
   }
 
   calcular_carrito(){
