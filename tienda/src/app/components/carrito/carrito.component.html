@@ -40,7 +40,7 @@
 
             <!-- Order review -->
             <h2 class="h4 mb-4">1. Detalles de la orden</h2>
-            <div class="bg-secondary rounded mb-5">
+            <div class="bg-secondary rounded mb-5" *ngIf="carrito_arr.length>=1">
               <!-- Item -->
               <div class="media px-2 px-sm-4 py-4 border-bottom" *ngFor="let item of carrito_arr">
                 <a [routerLink]="['/productos/',item.producto.slug]" style="min-width: 80px;">
@@ -73,6 +73,20 @@
               </div>
              
               
+            </div>
+
+            <div class="bg-secondary rounded mb-5 p-3" *ngIf="carrito_arr.length == 0">
+              <div class="row">
+                <div class="col-lg-3">
+                  <img src="assets/img/carrito-de-compras.png" alt="" style="width: 100%;">
+                </div>
+                <div class="col-lg-9" style="display: flex !important; align-items: center !important;">
+                    <dl style="font-size: 1.5rem !important;">
+                      <dt>Soy tu carrito 😉</dt>
+                      <dd>Por ahora no me agregaste algun producto 😅 </dd>
+                    </dl>
+                </div>
+              </div>
             </div>
 
             <!-- Adresses -->
