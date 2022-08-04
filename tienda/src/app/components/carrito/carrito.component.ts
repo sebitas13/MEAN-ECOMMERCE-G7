@@ -47,13 +47,7 @@ export class CarritoComponent implements OnInit {
     this.venta.cliente = this.idcliente; 
     this.token = localStorage.getItem('token');
     this.url = GLOBAL.url;
-    this._clienteService.obtener_carrito_cliente(this.idcliente,this.token).subscribe(
-      response=>{
-        this.carrito_arr = response.data;
-        this.calcular_carrito();
-        this.calcular_total('normal');
-      }
-    );
+    
 
     this._guestService.get_Envios().subscribe(
       response=>{
@@ -64,6 +58,7 @@ export class CarritoComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.init_data();
 
     setTimeout(()=>{
               new Cleave('#cc-number', {
@@ -113,7 +108,7 @@ export class CarritoComponent implements OnInit {
         
         this.venta.transaccion = order.purchase_units[0].payments.captures[0].id;
 
-        console.log(this.venta);
+        console.log(this.dventa);
         
         
       },
@@ -124,6 +119,29 @@ export class CarritoComponent implements OnInit {
         
       }
     }).render(this.paypalElement.nativeElement);
+  }
+
+  init_data(){
+    this._clienteService.obtener_carrito_cliente(this.idcliente,this.token).subscribe(
+      response=>{
+        this.carrito_arr = response.data;
+
+
+        this.carrito_arr.forEach(element=>{
+          this.dventa.push({
+            producto : element.producto._id,
+            subtotal : element.producto.precio,
+            variedad : element.variedad,
+            cantidad : element.cantidad,
+            cliente : localStorage.getItem('_id')
+
+          });
+        });
+
+        this.calcular_carrito();
+        this.calcular_total('normal');
+      }
+    );
   }
 
 
@@ -144,9 +162,10 @@ export class CarritoComponent implements OnInit {
   }
 
   calcular_carrito(){
+    this.subtotal = 0;
     this.carrito_arr.forEach(element=>   {
       this.subtotal = this.subtotal + parseInt(element.producto.precio);
-    })
+    });
 
     this.total_pagar = this.subtotal;
     
@@ -165,18 +184,15 @@ export class CarritoComponent implements OnInit {
                 });
         this.socket.emit('delete-carrito',{data:response.data});
         
-        this._clienteService.obtener_carrito_cliente(this.idcliente,this.token).subscribe(
-          response=>{
-            this.carrito_arr = response.data;
-            this.calcular_carrito();
-          }
-        )
+        this.init_data();
         
       }
     )
   }
 
   calcular_total(envio_titulo){
+
+    
     this.total_pagar = parseInt(this.subtotal.toString()) + parseInt(this.precio_envio);
     this.venta.subtotal = this.total_pagar;
     this.venta.envio_precio = parseInt(this.precio_envio);

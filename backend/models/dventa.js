@@ -9,6 +9,7 @@ var DventaSchema = Schema({
     subtotal: {type:Number, require :true},
     variedad: {type:String, require :true},
     cantidad: {type:Number, require :true},
+    cliente: {type:Schema.ObjectId,ref:'cliente',required:true},
     createAt : {type:Date,default: Date.now,require:true}
     
 });
